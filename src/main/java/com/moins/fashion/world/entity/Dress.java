@@ -5,6 +5,8 @@ import com.moins.fashion.world.util.DressSize;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -21,6 +23,7 @@ import lombok.NoArgsConstructor;
 public class Dress {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int dressId;
 	private String type;
 	private double priceMRP;
