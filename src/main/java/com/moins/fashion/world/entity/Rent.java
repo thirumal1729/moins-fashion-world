@@ -2,7 +2,7 @@ package com.moins.fashion.world.entity;
 
 import jakarta.persistence.Entity;
 
-@Entity
+//@Entity
 public class Rent {
 
 }

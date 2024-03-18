@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+//@Entity
 public class Admin {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "admin")

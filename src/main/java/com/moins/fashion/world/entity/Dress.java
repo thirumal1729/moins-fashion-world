@@ -35,8 +35,8 @@ public class Dress {
 	@Enumerated(EnumType.STRING)
 	private DressSize dressSize;
 	
-	@ManyToOne
-	@JoinColumn
-	private Rent rent;
+//	@ManyToOne
+//	@JoinColumn
+//	private Rent rent;
 	
 }
