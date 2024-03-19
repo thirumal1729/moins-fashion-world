@@ -16,9 +16,9 @@ public class CustomerDao {
 		return customerRepository.save(customer);
 	}
 	
-	public Customer loginCustomer(String email, String password) {
-		return customerRepository.findbyEmailandPassword(email, password);
-	}
+//	public Customer loginCustomer(String email, String password) {
+//		return customerRepository.findbyEmailandPassword(email, password);
+//	}
 	
 	public Customer loginById(int id) {
 		return customerRepository.findById(id).orElse(null);

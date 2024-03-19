@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.moins.fashion.world.dto.ResponseStructure;
 import com.moins.fashion.world.entity.Admin;
 import com.moins.fashion.world.payload.AdminDto;
+import com.moins.fashion.world.payload.AdminLoginDto;
 import com.moins.fashion.world.service.AdminService;
+
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/fashion")
@@ -21,8 +24,14 @@ public class AdminController {
 
 	// save Admin
 	@PostMapping("/admin")
-	public ResponseEntity<ResponseStructure<Admin>> saveAdmin(@RequestBody AdminDto adminDto, BindingResult result) {
+	public ResponseEntity<ResponseStructure<Admin>> saveAdmin(@Valid @RequestBody AdminDto adminDto,
+			BindingResult result) {
 		return adminService.saveAdmin(adminDto, result);
 	}
 
+	// Admin Login
+//	@PostMapping("/login")
+//	public ResponseEntity<ResponseStructure<>> login(@RequestBody AdminLoginDto loginObject){
+//		return 
+//	}
 }

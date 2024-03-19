@@ -25,9 +25,9 @@ public class CustomerController {
 		return customerService.createCustomer(customer);
 	}
 	
-	@GetMapping("/customer")
-	ResponseEntity<ResponseStructure<Customer>>login(@Valid @RequestParam String email,@Valid @RequestParam String password){
-		return customerService.loginCustomer(email, password);
-	}
+//	@GetMapping("/customer")
+//	ResponseEntity<ResponseStructure<Customer>>login(@Valid @RequestParam String email,@Valid @RequestParam String password){
+//		return customerService.loginCustomer(email, password);
+//	}
 	
 }
