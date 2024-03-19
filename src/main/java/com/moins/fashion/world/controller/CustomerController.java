@@ -20,26 +20,27 @@ public class CustomerController {
 
 	@Autowired
 	private CustomerService customerService;
-	
+
 	@PostMapping("/customer")
-	ResponseEntity<ResponseStructure<Customer>> createCustomer(@Valid @RequestBody Customer customer){
+	ResponseEntity<ResponseStructure<Customer>> createCustomer(@Valid @RequestBody Customer customer) {
 		return customerService.createCustomer(customer);
 	}
-	
+
 //	@GetMapping("/customer")
 //	ResponseEntity<ResponseStructure<Customer>>login(@Valid @RequestParam String email,@Valid @RequestParam String password){
 //		return customerService.loginCustomer(email, password);
 //	}
-	
+
 	@PutMapping("/customer")
-	ResponseEntity<ResponseStructure<Customer>>updateCustomer(@Valid @RequestParam String email,@Valid @RequestParam String password, @Valid @RequestBody Customer customer){
+	ResponseEntity<ResponseStructure<Customer>> updateCustomer(@Valid @RequestParam String email,
+			@Valid @RequestParam String password, @Valid @RequestBody Customer customer) {
 		return customerService.updateCustomer(email, password, customer);
 	}
-	
+
 	@PutMapping("/customer/changepassword")
-	ResponseEntity<ResponseStructure<Customer>>changePassword(@Valid @RequestParam String email,@Valid @RequestParam String old_password, @Valid String new_password){
+	ResponseEntity<ResponseStructure<Customer>> changePassword(@Valid @RequestParam String email,
+			@Valid @RequestParam String old_password, @Valid String new_password) {
 		return customerService.changePassword(email, old_password, new_password);
 	}
-	
-	
+
 }

@@ -24,4 +24,6 @@ public interface DressService {
 	ResponseEntity<ResponseStructure<List<Dress>>> findBySize(DressSize size);
 	
 	ResponseEntity<ResponseStructure<Dress>> findById(int dressId);
+	
+	ResponseEntity<ResponseStructure<List<Dress>>> findAllDresses();
 }
