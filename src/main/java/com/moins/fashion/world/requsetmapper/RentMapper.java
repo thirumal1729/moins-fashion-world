@@ -11,9 +11,10 @@ import com.moins.fashion.world.util.Status;
 public class RentMapper {
 
 	public static Rent mapToRent(RentDto rentDto) {
-
-		List<Dress> dresses = DressPrice.getListOfDresses(rentDto.getDressesId());
-		double totalPrice = DressPrice.getTotalPriceOfDresses(dresses);
+		
+		DressPrice dp=new DressPrice();
+		List<Dress> dresses = dp.getListOfDresses(rentDto.getDressesId());
+		double totalPrice = dp.getTotalPriceOfDresses(dresses);
 
 		return Rent.builder().rentDate(rentDto.getRentDate()).totalRentPrice(totalPrice).status(Status.PENDING).dresses(dresses).build();
 	}
