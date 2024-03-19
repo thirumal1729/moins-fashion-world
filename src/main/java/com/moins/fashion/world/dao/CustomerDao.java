@@ -17,10 +17,19 @@ public class CustomerDao {
 	}
 	
 	public Customer loginCustomer(String email, String password) {
-		return customerRepository.findbyEmailandPassword(email, password);
+		return customerRepository.findByEmailAndPassword(email, password);
 	}
 	
-	public Customer loginById(int id) {
+	public Customer findCustomerById(int id) {
 		return customerRepository.findById(id).orElse(null);
+	}
+	
+	public Customer findbyEmail(String email) {
+		return customerRepository.findByEmail(email);
+	}
+	
+	public Customer findByToken(String token) {
+		return customerRepository.findByMyToken(token);
+		
 	}
 }
