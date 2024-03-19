@@ -15,4 +15,9 @@ public class AdminDao {
 	public Admin saveAdmin(Admin admin) {
 		return adminRepository.save(admin);
 	}
+
+	// find Admin by Id
+	public Admin findById(int adminId) {
+		return adminRepository.findById(adminId).orElseThrow(() -> new RuntimeException());
+	}
 }
