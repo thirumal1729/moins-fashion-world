@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.moins.fashion.world.entity.Dress;
+import com.moins.fashion.world.exception.DressNotFoundException;
 import com.moins.fashion.world.exception.DressesNotAvailableException;
 import com.moins.fashion.world.repository.DressRepository;
 import com.moins.fashion.world.util.DressSize;
@@ -38,7 +39,7 @@ public class DressDao {
 
 	// find by id
 	public Dress findById(int dressId) {
-		return this.dressRepository.findById(dressId).orElseThrow(() -> new RuntimeException());
+		return this.dressRepository.findById(dressId).orElseThrow(() -> new DressNotFoundException());
 	}
 
 	// delete Dress
@@ -50,5 +51,10 @@ public class DressDao {
 		} else {
 			throw new DressesNotAvailableException();
 		}
+	}
+
+	// find all dress
+	public List<Dress> findAllDress() {
+		return this.dressRepository.findAll();
 	}
 }

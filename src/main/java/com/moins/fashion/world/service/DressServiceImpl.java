@@ -151,4 +151,18 @@ public class DressServiceImpl implements DressService {
 		}
 	}
 
+	@Override
+	public ResponseEntity<ResponseStructure<List<Dress>>> findAllDresses() {
+		List<Dress> dresses = this.dressDao.findAllDress();
+		if (!dresses.isEmpty()) {
+			ResponseStructure<List<Dress>> responseStructure = new ResponseStructure<>();
+			responseStructure.setStatusCode(HttpStatus.OK.value());
+			responseStructure.setMessage("Found");
+			responseStructure.setData(dresses);
+
+			return new ResponseEntity<ResponseStructure<List<Dress>>>(responseStructure, HttpStatus.OK);
+		} else {
+			throw new DressesNotAvailableException();
+		}
+	}
 }
