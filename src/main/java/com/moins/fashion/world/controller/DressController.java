@@ -24,7 +24,7 @@ public class DressController {
 	private DressService dressService;
 	
 	@PostMapping
-	public ResponseEntity<ResponseStructure<Dress>> saveDress(@RequestParam MultipartFile file, @ModelAttribute DressDto dressDto) throws IOException {
+	public ResponseEntity<ResponseStructure<Dress>> saveDress(@RequestParam("image") MultipartFile file, @ModelAttribute DressDto dressDto) throws IOException {
 		return this.dressService.saveDress(file, dressDto);
 	}
 	
