@@ -46,7 +46,7 @@ public class RentController {
 		return this.rentService.cancelRent(rentId);
 	}
 	
-	@PutMapping("/{rentId}")
+	@PutMapping("/confirm/{rentId}")
 	public ResponseEntity<ResponseStructure<String>> confirmRent(@PathVariable int rentId) {
 		return this.rentService.confirmRent(rentId);
 	}
