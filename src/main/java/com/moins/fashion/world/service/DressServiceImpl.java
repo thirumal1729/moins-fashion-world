@@ -1,13 +1,10 @@
 package com.moins.fashion.world.service;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-
 import java.util.Arrays;
-
 import java.util.List;
 import java.util.UUID;
 
@@ -29,10 +26,7 @@ import com.moins.fashion.world.payload.DressDto;
 import com.moins.fashion.world.requsetmapper.DressMapper;
 import com.moins.fashion.world.util.DressSize;
 
-import lombok.extern.slf4j.Slf4j;
-
 @Service
-@Slf4j
 public class DressServiceImpl implements DressService {
 
 	@Value("${project.image}")
