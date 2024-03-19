@@ -1,6 +1,7 @@
 package com.moins.fashion.world.service;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -22,10 +23,15 @@ import com.moins.fashion.world.dto.ResponseStructure;
 import com.moins.fashion.world.entity.Dress;
 import com.moins.fashion.world.exception.DressNotFoundException;
 import com.moins.fashion.world.exception.DressesNotAvailableException;
+import com.moins.fashion.world.exception.InvalidFileException;
+import com.moins.fashion.world.exception.NoFileException;
 import com.moins.fashion.world.payload.DressDto;
 import com.moins.fashion.world.util.DressSize;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class DressServiceImpl implements DressService {
 
 	@Value("${project.image}")
@@ -39,15 +45,18 @@ public class DressServiceImpl implements DressService {
 	@Override
 	public ResponseEntity<ResponseStructure<Dress>> saveDress(MultipartFile file, DressDto dressDto)
 			throws IOException {
-
+		
 		// File name
 		String name = file.getOriginalFilename();
 
+		if(name.equals("")) {
+			throw new NoFileException("Please select the file...!");
+		}
 		
 		String extention = name.substring(name.lastIndexOf("."));
 		
 		if(!ALLOWED_EXTENTIONS.contains(extention)) {
-			throw null;
+			throw new InvalidFileException("Invalid file type. Only JPG, JPEG, and PNG files are allowed.");
 		}
 		
 		// generate random Id for each photo

@@ -45,4 +45,28 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.NO_CONTENT);
 	}
+
+	// InvalidFileException
+	@ExceptionHandler(InvalidFileException.class)
+	public ResponseEntity<ResponseStructure<String>> catchInvalidFileException(InvalidFileException exception) {
+		ResponseStructure<String> responseStructure = new ResponseStructure<String>();
+
+		responseStructure.setStatusCode(HttpStatus.BAD_REQUEST.value());
+		responseStructure.setMessage(exception.getMessage());
+		responseStructure.setData("Bad Request");
+
+		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.BAD_REQUEST);
+	}
+
+	// NoFileException
+	@ExceptionHandler(NoFileException.class)
+	public ResponseEntity<ResponseStructure<String>> catchNoFileException(NoFileException exception) {
+		ResponseStructure<String> responseStructure = new ResponseStructure<String>();
+
+		responseStructure.setStatusCode(HttpStatus.BAD_REQUEST.value());
+		responseStructure.setMessage(exception.getMessage());
+		responseStructure.setData("Bad Request");
+
+		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.BAD_REQUEST);
+	}
 }
