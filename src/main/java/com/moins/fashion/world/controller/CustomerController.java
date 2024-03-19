@@ -19,15 +19,15 @@ public class CustomerController {
 
 	@Autowired
 	private CustomerService customerService;
-	
+
 	@PostMapping("/customer")
-	ResponseEntity<ResponseStructure<Customer>> createCustomer(@Valid @RequestBody Customer customer){
+	ResponseEntity<ResponseStructure<Customer>> createCustomer(@Valid @RequestBody Customer customer) {
 		return customerService.createCustomer(customer);
 	}
-	
+
 //	@GetMapping("/customer")
 //	ResponseEntity<ResponseStructure<Customer>>login(@Valid @RequestParam String email,@Valid @RequestParam String password){
 //		return customerService.loginCustomer(email, password);
 //	}
-	
+
 }
