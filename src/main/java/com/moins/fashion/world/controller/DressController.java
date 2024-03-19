@@ -1,10 +1,13 @@
 package com.moins.fashion.world.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,6 +18,7 @@ import com.moins.fashion.world.dto.ResponseStructure;
 import com.moins.fashion.world.entity.Dress;
 import com.moins.fashion.world.payload.DressDto;
 import com.moins.fashion.world.service.DressService;
+import com.moins.fashion.world.util.DressSize;
 
 @RestController
 @RequestMapping("/dresses")
@@ -22,10 +26,30 @@ public class DressController {
 
 	@Autowired
 	private DressService dressService;
-	
+
 	@PostMapping
-	public ResponseEntity<ResponseStructure<Dress>> saveDress(@RequestParam("image") MultipartFile file, @ModelAttribute DressDto dressDto) throws IOException {
+	public ResponseEntity<ResponseStructure<Dress>> saveDress(@RequestParam("image") MultipartFile file,
+			@ModelAttribute DressDto dressDto) throws IOException {
 		return this.dressService.saveDress(file, dressDto);
 	}
-	
+
+	@GetMapping("/type/{type}")
+	public ResponseEntity<ResponseStructure<List<Dress>>> findByType(@PathVariable String type) {
+		return dressService.findByType(type);
+	}
+
+	@GetMapping("/brandName/{brandName}")
+	public ResponseEntity<ResponseStructure<List<Dress>>> findByBrandName(@PathVariable String brandName) {
+		return dressService.findByBrandName(brandName);
+	}
+
+	@GetMapping("/size/{size}")
+	public ResponseEntity<ResponseStructure<List<Dress>>> findBySize(@PathVariable DressSize size) {
+		return dressService.findBySize(size);
+	}
+
+	@GetMapping("/dressId/{dressId}")
+	public ResponseEntity<ResponseStructure<Dress>> findById(@PathVariable int dressId) {
+		return dressService.findById(dressId);
+	}
 }
