@@ -18,6 +18,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Rent {
 
+
 	private int id;
 	private String rentDate;
 	private double totalRentPrice;
