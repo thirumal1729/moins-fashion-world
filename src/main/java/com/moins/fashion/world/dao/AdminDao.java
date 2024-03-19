@@ -15,4 +15,6 @@ public class AdminDao {
 	public Admin saveAdmin(Admin admin) {
 		return adminRepository.save(admin);
 	}
+	
+
 }
