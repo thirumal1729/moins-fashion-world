@@ -17,13 +17,14 @@ import com.moins.fashion.world.dao.DressDao;
 import com.moins.fashion.world.dto.ResponseStructure;
 import com.moins.fashion.world.entity.Dress;
 import com.moins.fashion.world.payload.DressDto;
+import com.moins.fashion.world.requsetmapper.DressMapper;
 
 @Service
 public class DressServiceImpl implements DressService {
 
 	@Value("${project.image}")
 	private String path;
-	
+
 	@Autowired
 	private DressDao dressDao;
 
@@ -51,17 +52,14 @@ public class DressServiceImpl implements DressService {
 		// file copy
 		Files.copy(file.getInputStream(), Paths.get(filePath));
 
-		Dress dress = Dress.builder().type(dressDto.getType()).priceMRP(dressDto.getPriceMRP()).rentPrice(dressDto.getRentPrice())
-				.depositPrice(dressDto.getDepositPrice()).brandName(dressDto.getBrandName()).dressImage(filePath)
-				.dressSize(dressDto.getDressSize()).build();
+		Dress dress = DressMapper.mapToDress(dressDto, filePath);
+		dress = this.dressDao.saveDress(dress);
 
-		this.dressDao.saveDress(dress);
-		
 		ResponseStructure<Dress> responseStructure = new ResponseStructure<Dress>();
 		responseStructure.setStatusCode(HttpStatus.CREATED.value());
 		responseStructure.setMessage("Success");
 		responseStructure.setData(dress);
-		
+
 		return new ResponseEntity<ResponseStructure<Dress>>(responseStructure, HttpStatus.CREATED);
 	}
 
