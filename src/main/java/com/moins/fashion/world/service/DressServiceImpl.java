@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,8 @@ public class DressServiceImpl implements DressService {
 	
 	@Autowired
 	private DressDao dressDao;
+	
+	private static List<String> ALLOWED_EXTENTIONS = Arrays.asList(".jpg", ".jpeg", ".png");
 
 	@Override
 	public ResponseEntity<ResponseStructure<Dress>> saveDress(MultipartFile file, DressDto dressDto)
@@ -34,10 +38,16 @@ public class DressServiceImpl implements DressService {
 		// File name
 		String name = file.getOriginalFilename();
 
+		
+		String extention = name.substring(name.lastIndexOf("."));
+		
+		if(!ALLOWED_EXTENTIONS.contains(extention)) {
+			throw null;
+		}
+		
 		// generate random Id for each photo
-
 		String randomId = UUID.randomUUID().toString();
-		String fileName1 = randomId.concat(name.substring(name.lastIndexOf(".")));
+		String fileName1 = randomId.concat(extention);
 
 		// Fullpath
 		String filePath = path + File.separator + fileName1;
