@@ -21,17 +21,23 @@ public class Customer {
 	private int id;
 
 	private String name;
-	
+
 	@Email
 	@Column(unique = true)
 	private String email;
-	
+
 	@NotNull
 	private long phone;
-	
+
 	@NotNull
 	private String password;
+
 	private String address;
+	private String securityQuestion;
+	private String answer;
+	private boolean is_verified = false;
+	private String myToken;
+	private String alternativeEmail;
 
 	@OneToMany(mappedBy = "customer")
 	List<Rent> rents;
