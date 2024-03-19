@@ -15,7 +15,7 @@ public class CustomerDao {
 	public Customer createCustomer (Customer customer) {
 		return customerRepository.save(customer);
 	}
-	
+
 	public Customer loginCustomer(String email, String password) {
 		return customerRepository.findByEmailAndPassword(email, password);
 	}

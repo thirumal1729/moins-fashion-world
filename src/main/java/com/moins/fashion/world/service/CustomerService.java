@@ -27,17 +27,17 @@ public class CustomerService {
 		return new ResponseEntity<ResponseStructure<Customer>>(rs, HttpStatus.CREATED);
 	}
 
-	public ResponseEntity<ResponseStructure<Customer>> loginCustomer(String email, String password) {
-
-		Customer receivedCustomer = customerDao.loginCustomer(email, password);
-
-		ResponseStructure<Customer> rs = new ResponseStructure<Customer>();
-		rs.setData(receivedCustomer);
-		rs.setMessage("Customer fetched");
-		rs.setStatusCode(HttpStatus.OK.value());
-
-		return new ResponseEntity<ResponseStructure<Customer>>(rs, HttpStatus.OK);
-	}
+//	public ResponseEntity<ResponseStructure<Customer>> loginCustomer(String email, String password) {
+//
+//		Customer receivedCustomer = customerDao.loginCustomer(email, password);
+//
+//		ResponseStructure<Customer> rs = new ResponseStructure<Customer>();
+//		rs.setData(receivedCustomer);
+//		rs.setMessage("Customer fetched");
+//		rs.setStatusCode(HttpStatus.OK.value());
+//
+//		return new ResponseEntity<ResponseStructure<Customer>>(rs, HttpStatus.OK);
+//	}
 
 	public ResponseEntity<ResponseStructure<Customer>> loginCustomerById(int id) {
 
