@@ -12,7 +12,7 @@ import com.moins.fashion.world.dto.ResponseStructure;
 import com.moins.fashion.world.entity.Admin;
 import com.moins.fashion.world.payload.AdminDto;
 import com.moins.fashion.world.payload.AdminLoginDto;
-import com.moins.fashion.world.service.AdminService;
+import com.moins.fashion.world.service.AdminServiceImpl;
 
 import jakarta.validation.Valid;
 
@@ -20,7 +20,7 @@ import jakarta.validation.Valid;
 @RequestMapping("/fashion")
 public class AdminController {
 	@Autowired
-	private AdminService adminService;
+	private AdminServiceImpl adminService;
 
 	// save Admin
 	@PostMapping("/admin")

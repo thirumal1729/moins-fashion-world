@@ -52,4 +52,9 @@ public class DressController {
 	public ResponseEntity<ResponseStructure<Dress>> findById(@PathVariable int dressId) {
 		return dressService.findById(dressId);
 	}
+
+	@GetMapping("/allDresses")
+	public ResponseEntity<ResponseStructure<List<Dress>>> findAllDresses() {
+		return dressService.findAllDresses();
+	}
 }
