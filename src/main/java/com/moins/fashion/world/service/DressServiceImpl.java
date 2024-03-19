@@ -26,6 +26,7 @@ import com.moins.fashion.world.exception.DressesNotAvailableException;
 import com.moins.fashion.world.exception.InvalidFileException;
 import com.moins.fashion.world.exception.NoFileException;
 import com.moins.fashion.world.payload.DressDto;
+import com.moins.fashion.world.requsetmapper.DressMapper;
 import com.moins.fashion.world.util.DressSize;
 
 import lombok.extern.slf4j.Slf4j;
@@ -75,16 +76,19 @@ public class DressServiceImpl implements DressService {
 		// file copy
 		Files.copy(file.getInputStream(), Paths.get(filePath));
 
-		Dress dress = Dress.builder().type(dressDto.getType()).priceMRP(dressDto.getPriceMRP())
+		Dress dress = DressMapper.mapToDress(dressDto, filePath);
+		dress = this.dressDao.saveDress(dress);
+
+		Dress newDress = Dress.builder().type(dressDto.getType()).priceMRP(dressDto.getPriceMRP())
 				.rentPrice(dressDto.getRentPrice()).depositPrice(dressDto.getDepositPrice())
 				.brandName(dressDto.getBrandName()).dressImage(filePath).dressSize(dressDto.getDressSize()).build();
 
-		this.dressDao.saveDress(dress);
+		this.dressDao.saveDress(newDress);
 
 		ResponseStructure<Dress> responseStructure = new ResponseStructure<Dress>();
 		responseStructure.setStatusCode(HttpStatus.CREATED.value());
 		responseStructure.setMessage("Success");
-		responseStructure.setData(dress);
+		responseStructure.setData(newDress);
 
 		return new ResponseEntity<ResponseStructure<Dress>>(responseStructure, HttpStatus.CREATED);
 	}
