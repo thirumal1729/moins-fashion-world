@@ -1,27 +1,16 @@
-package com.moins.fashion.world.entity;
+package com.moins.fashion.world.dto;
 
 import java.util.List;
 
+import com.moins.fashion.world.entity.Rent;
+
 import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
 import lombok.Data;
-
-@Entity
 @Data
-@Builder
-public class Customer {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-
+public class CustomerDto {
 	private String name;
 
 	@Email
@@ -29,7 +18,7 @@ public class Customer {
 	private String email;
 
 	@NotNull
-	private long phone;
+	private long phone; 
 
 	@NotNull
 	private String password;
@@ -39,7 +28,7 @@ public class Customer {
 	private String answer;
 	private boolean is_verified = false;
 	private String myToken;
-	private String alternativeEmail;
+	private String alternativeEmail; 
 
 	@OneToMany(mappedBy = "customer")
 	List<Rent> rents;

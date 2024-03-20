@@ -1,6 +1,6 @@
 package com.moins.fashion.world.exception;
 
-public class MailFailedToSendException extends Exception {
+public class MailFailedToSendException extends RuntimeException {
 	String message="Mail Delivery Failed";
 
 	public MailFailedToSendException() {

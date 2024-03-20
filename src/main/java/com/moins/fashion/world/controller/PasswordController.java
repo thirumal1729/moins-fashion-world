@@ -19,20 +19,17 @@ public class PasswordController {
 	private PasswordService passwordService;
 
 	@PostMapping("/forgotpassword")
-	ResponseEntity<ResponseStructure<String>> forgotPassword(@Valid @RequestParam String email)
-			throws MailFailedToSendException {
+	ResponseEntity<ResponseStructure<String>> forgotPassword(@Valid @RequestParam String email){
 		return passwordService.forgotPassword(email);
 	}
 
 	@PostMapping("/validatetoken")
-	ResponseEntity<ResponseStructure<String>> validateToken(@RequestParam String token, @RequestParam String answer)
-			throws MailFailedToSendException {
+	ResponseEntity<ResponseStructure<String>> validateToken(@RequestParam String token, @RequestParam String answer) {
 		return passwordService.verify(token, answer);
 
 	}
 	@PostMapping("/setnewpassword")
-	ResponseEntity<ResponseStructure<String>> updatePassword(@RequestParam String token,@RequestParam String new_password)
-			throws MailFailedToSendException {
+	ResponseEntity<ResponseStructure<String>> updatePassword(@RequestParam String token,@RequestParam String new_password){
 		return passwordService.setNewPassword(token, new_password);
 
 	}
