@@ -1,5 +1,7 @@
 package com.moins.fashion.world.exception;
 
+import java.sql.SQLIntegrityConstraintViolationException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -45,13 +47,41 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.NO_CONTENT);
 	}
+
+	// RentDetailNotAvailableException
+	@ExceptionHandler(RentDetailsNotFoundException.class)
+
+	public ResponseEntity<ResponseStructure<String>> catchRentDetailsNotAvailableException(
+			RentDetailsNotFoundException exception) {
+		ResponseStructure<String> responseStructure = new ResponseStructure<String>();
+
+		responseStructure.setStatusCode(HttpStatus.NO_CONTENT.value());
+		responseStructure.setMessage(exception.getMessage());
+		responseStructure.setData("No Rent details are Available!!");
+
+		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.NO_CONTENT);
+	}
+
+	// SqlIntegrityConstaraintViolationException
+	@ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+	public ResponseEntity<ResponseStructure<String>> catchSqlIntegrityConstraintViolationException(
+			RentDetailsNotFoundException exception) {
+		ResponseStructure<String> responseStructure = new ResponseStructure<String>();
+
+		responseStructure.setStatusCode(HttpStatus.BAD_REQUEST.value());
+		responseStructure.setMessage(exception.getMessage());
+		responseStructure.setData("Data might be duplicated!!");
+
+		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.BAD_REQUEST);
+	}
+
 	@ExceptionHandler(MailFailedToSendException.class)
 	public ResponseEntity<ResponseStructure<String>> catchMailFailedException(MailFailedToSendException exception) {
-		ResponseStructure<String> structure =new ResponseStructure<String>();
+		ResponseStructure<String> structure = new ResponseStructure<String>();
 		structure.setStatusCode(HttpStatus.BAD_REQUEST.value());
 		structure.setMessage("BAD REQUEST");
 		structure.setData(exception.getMessage());
-		
-		return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.BAD_REQUEST);
+
+		return new ResponseEntity<ResponseStructure<String>>(structure, HttpStatus.BAD_REQUEST);
 	}
 }

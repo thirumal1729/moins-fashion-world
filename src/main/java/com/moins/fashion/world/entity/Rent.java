@@ -2,8 +2,10 @@ package com.moins.fashion.world.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.moins.fashion.world.util.Status;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -35,8 +37,9 @@ public class Rent {
 
 	@ManyToOne
 	@JoinColumn
+	@JsonIgnore
 	private Customer customer;
 
-	@OneToMany(mappedBy = "rent")
+	@OneToMany(mappedBy = "rent", cascade = CascadeType.PERSIST)
 	private List<Dress> dresses;
 }

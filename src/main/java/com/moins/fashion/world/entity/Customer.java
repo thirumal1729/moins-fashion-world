@@ -2,6 +2,8 @@ package com.moins.fashion.world.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -41,9 +43,11 @@ public class Customer {
 	private String securityQuestion;
 	private String answer;
 	private boolean is_verified = false;
+	@JsonIgnore
 	private String myToken;
 	private String alternativeEmail;
 
 	@OneToMany(mappedBy = "customer")
+	@JsonIgnore
 	List<Rent> rents;
 }
