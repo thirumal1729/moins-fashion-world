@@ -45,4 +45,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.NO_CONTENT);
 	}
+	@ExceptionHandler(MailFailedToSendException.class)
+	public ResponseEntity<ResponseStructure<String>> catchMailFailedException(MailFailedToSendException exception) {
+		ResponseStructure<String> structure =new ResponseStructure<String>();
+		structure.setStatusCode(HttpStatus.BAD_REQUEST.value());
+		structure.setMessage("BAD REQUEST");
+		structure.setData(exception.getMessage());
+		
+		return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.BAD_REQUEST);
+	}
 }
