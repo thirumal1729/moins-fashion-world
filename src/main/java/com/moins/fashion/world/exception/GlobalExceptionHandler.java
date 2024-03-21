@@ -111,4 +111,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 		return new ResponseEntity<ResponseStructure<String>>(structure, HttpStatus.BAD_REQUEST);
 	}
+	// RecordNotFoundException
+		@ExceptionHandler(RecordNotFoundException.class)
+		public ResponseEntity<ResponseStructure<String>> catchRecordNotFoundException(
+				RecordNotFoundException exception) {
+			ResponseStructure<String> responseStructure = new ResponseStructure<String>();
+			responseStructure.setStatusCode(HttpStatus.NO_CONTENT.value());
+			responseStructure.setMessage(exception.getMessage());
+			responseStructure.setData("No such record!!");
+
+			return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.NO_CONTENT);
+		}
 }

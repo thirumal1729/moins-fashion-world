@@ -37,13 +37,14 @@ public class RentController {
 	}
 
 	// Fetch Rent Details by Customer
-	@GetMapping("/{customerId}")
+	@GetMapping("/customer/{customerId}")
+	@PreAuthorize(value = "hasRole('CUSTOMER')")
 	public ResponseEntity<ResponseStructure<List<Rent>>> getRentById(@PathVariable int customerId) {
 		return this.rentService.getRentById(customerId);
 	}
 
 	// Fetch All Rent Details By Admin
-	@GetMapping("/{adminId}")
+	@GetMapping("/admin/{adminId}")
 	@PreAuthorize(value = "hasRole('ADMIN')")
 	public ResponseEntity<ResponseStructure<List<Rent>>> getAllRentDetails(@PathVariable int adminId) {
 		return this.rentService.getAllRentDetails(adminId);
