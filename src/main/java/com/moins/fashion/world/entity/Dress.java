@@ -1,7 +1,9 @@
 package com.moins.fashion.world.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.moins.fashion.world.util.DressSize;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -37,6 +39,7 @@ public class Dress {
 	
 	@ManyToOne
 	@JoinColumn
+	@JsonIgnore
 	private Rent rent;
 	
 }

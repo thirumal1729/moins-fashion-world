@@ -8,9 +8,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.moins.fashion.world.dao.CustomerDao;
+import com.moins.fashion.world.dao.DressDao;
 import com.moins.fashion.world.dao.RentDao;
 import com.moins.fashion.world.dto.ResponseStructure;
+import com.moins.fashion.world.entity.Customer;
+import com.moins.fashion.world.entity.Dress;
 import com.moins.fashion.world.entity.Rent;
+import com.moins.fashion.world.exception.RentDetailsNotFoundException;
 import com.moins.fashion.world.payload.RentDto;
 import com.moins.fashion.world.requsetmapper.RentMapper;
 import com.moins.fashion.world.util.Status;
@@ -22,13 +26,26 @@ public class RentServiceImpl implements RentService {
 	RentDao rentDao;
 	@Autowired
 	CustomerDao customerDao;
+	@Autowired
+	DressDao dressDao;
 
 	@Override
-	public ResponseEntity<ResponseStructure<Rent>> saveRent(RentDto rentDto) {
+	public ResponseEntity<ResponseStructure<Rent>> saveRent(RentDto rentDto, String customerEmail) {
 
-		Rent rent = RentMapper.mapToRent(rentDto);
+		Rent rent = RentMapper.mapToRent(rentDto, dressDao);
+		Customer customer = customerDao.findbyEmail(customerEmail);
+		rent.setCustomer(customer);
 
 		rent = this.rentDao.saveRent(rent);
+
+		List<Dress> dresses = rent.getDresses();
+
+		for (Dress dress : dresses) {
+
+			dress.setRent(rent);
+			dressDao.saveDress(dress);
+
+		}
 
 		ResponseStructure<Rent> responseStructure = new ResponseStructure<Rent>();
 		responseStructure.setStatusCode(HttpStatus.CREATED.value());
@@ -41,16 +58,20 @@ public class RentServiceImpl implements RentService {
 
 	// Validation to be provided by the customer
 	@Override
-	public ResponseEntity<ResponseStructure<Rent>> getRentById(int rentId, int customerId) {
+	public ResponseEntity<ResponseStructure<List<Rent>>> getRentById(int customerId) {
 
-		Rent rent = rentDao.getRentById(rentId);
+		Customer customer = customerDao.findCustomerById(customerId);
+		List<Rent> rentList = customer.getRents();
+		if (rentList != null) {
+			ResponseStructure<List<Rent>> responseStructure = new ResponseStructure<List<Rent>>();
+			responseStructure.setStatusCode(HttpStatus.OK.value());
+			responseStructure.setMessage("Success");
+			responseStructure.setData(rentList);
 
-		ResponseStructure<Rent> responseStructure = new ResponseStructure<Rent>();
-		responseStructure.setStatusCode(HttpStatus.OK.value());
-		responseStructure.setMessage("Success");
-		responseStructure.setData(rent);
-
-		return new ResponseEntity<ResponseStructure<Rent>>(responseStructure, HttpStatus.OK);
+			return new ResponseEntity<ResponseStructure<List<Rent>>>(responseStructure, HttpStatus.OK);
+		} else {
+			throw new RentDetailsNotFoundException();
+		}
 
 	}
 
