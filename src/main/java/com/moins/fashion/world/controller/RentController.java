@@ -31,7 +31,7 @@ public class RentController {
 	// Save Rent Details
 	@PostMapping("/{customerEmail}")
 	@PreAuthorize(value = "hasRole('CUSTOMER')")
-	public ResponseEntity<ResponseStructure<Rent>> saveRent(@Valid BindingResult result, @RequestBody RentDto rentDto,
+	public ResponseEntity<ResponseStructure<Rent>> saveRent(@Valid @RequestBody RentDto rentDto,BindingResult result, 
 			@PathVariable String customerEmail) {
 		return this.rentService.saveRent(rentDto, customerEmail, result);
 	}
