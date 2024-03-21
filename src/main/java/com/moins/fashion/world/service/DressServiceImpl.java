@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,6 +20,8 @@ import com.moins.fashion.world.dto.ResponseStructure;
 import com.moins.fashion.world.entity.Dress;
 import com.moins.fashion.world.exception.DressNotFoundException;
 import com.moins.fashion.world.exception.DressesNotAvailableException;
+import com.moins.fashion.world.exception.InvalidFileException;
+import com.moins.fashion.world.exception.NoFileException;
 import com.moins.fashion.world.payload.DressDto;
 import com.moins.fashion.world.requsetmapper.DressMapper;
 import com.moins.fashion.world.util.DressSize;
@@ -31,18 +34,29 @@ public class DressServiceImpl implements DressService {
 
 	@Autowired
 	private DressDao dressDao;
+	
+	private static List<String> ALLOWED_EXTENTIONS = Arrays.asList(".jpg", ".jpeg", ".png");
 
 	@Override
 	public ResponseEntity<ResponseStructure<Dress>> saveDress(MultipartFile file, DressDto dressDto)
 			throws IOException {
-
+		
 		// File name
 		String name = file.getOriginalFilename();
 
+		if(name.equals("")) {
+			throw new NoFileException("Please select the file...!");
+		}
+		
+		String extention = name.substring(name.lastIndexOf("."));
+		
+		if(!ALLOWED_EXTENTIONS.contains(extention)) {
+			throw new InvalidFileException("Invalid file type. Only JPG, JPEG, and PNG files are allowed.");
+		}
+		
 		// generate random Id for each photo
-
 		String randomId = UUID.randomUUID().toString();
-		String fileName1 = randomId.concat(name.substring(name.lastIndexOf(".")));
+		String fileName1 = randomId.concat(extention);
 
 		// Fullpath
 		String filePath = path + File.separator + fileName1;
@@ -60,16 +74,10 @@ public class DressServiceImpl implements DressService {
 		Dress dress = DressMapper.mapToDress(dressDto, filePath);
 		dress = this.dressDao.saveDress(dress);
 
-		Dress newDress = Dress.builder().type(dressDto.getType()).priceMRP(dressDto.getPriceMRP())
-				.rentPrice(dressDto.getRentPrice()).depositPrice(dressDto.getDepositPrice())
-				.brandName(dressDto.getBrandName()).dressImage(filePath).dressSize(dressDto.getDressSize()).build();
-
-		this.dressDao.saveDress(newDress);
-
 		ResponseStructure<Dress> responseStructure = new ResponseStructure<Dress>();
 		responseStructure.setStatusCode(HttpStatus.CREATED.value());
 		responseStructure.setMessage("Success");
-		responseStructure.setData(newDress);
+		responseStructure.setData(dress);
 
 		return new ResponseEntity<ResponseStructure<Dress>>(responseStructure, HttpStatus.CREATED);
 	}

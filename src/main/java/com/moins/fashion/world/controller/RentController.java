@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,6 +29,7 @@ public class RentController {
 
 	// Save Rent Details
 	@PostMapping("/{customerEmail}")
+	@PreAuthorize(value = "hasRole('CUSTOMER')")
 	public ResponseEntity<ResponseStructure<Rent>> saveRent(@Valid @RequestBody RentDto rentDto,
 			@PathVariable String customerEmail) {
 		return this.rentService.saveRent(rentDto, customerEmail);
@@ -39,14 +41,18 @@ public class RentController {
 		return this.rentService.getRentById(customerId);
 	}
 
+	
 	// Fetch All Rent Details By Admin
-	@GetMapping("/all/{adminId}")
+	@GetMapping("/{adminId}")
+	@PreAuthorize(value = "hasRole('ADMIN')")
 	public ResponseEntity<ResponseStructure<List<Rent>>> getAllRentDetails(@PathVariable int adminId) {
 		return this.rentService.getAllRentDetails(adminId);
 	}
 
+	
 	// Cancel Rent
 	@PutMapping("/{rentId}")
+	@PreAuthorize(value = "hasRole('ADMIN')")
 	public ResponseEntity<ResponseStructure<String>> cancelRent(@PathVariable int rentId) {
 		return this.rentService.cancelRent(rentId);
 	}
