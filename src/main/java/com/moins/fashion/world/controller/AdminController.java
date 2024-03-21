@@ -11,16 +11,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.moins.fashion.world.dto.ResponseStructure;
 import com.moins.fashion.world.entity.Admin;
 import com.moins.fashion.world.payload.AdminDto;
-import com.moins.fashion.world.payload.AdminLoginDto;
-import com.moins.fashion.world.service.AdminServiceImpl;
+import com.moins.fashion.world.payload.JwtRequest;
+import com.moins.fashion.world.payload.JwtResponse;
+import com.moins.fashion.world.service.AdminService;
 
 import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/fashion")
 public class AdminController {
+	
 	@Autowired
-	private AdminServiceImpl adminService;
+	private AdminService adminService;
 
 	// save Admin
 	@PostMapping("/admin")
@@ -30,8 +32,8 @@ public class AdminController {
 	}
 
 	// Admin Login
-//	@PostMapping("/login")
-//	public ResponseEntity<ResponseStructure<>> login(@RequestBody AdminLoginDto loginObject){
-//		return 
-//	}
+	@PostMapping("/login")
+	public ResponseEntity<ResponseStructure<JwtResponse>> login(@RequestBody JwtRequest request){
+		return this.adminService.login(request);
+	}
 }

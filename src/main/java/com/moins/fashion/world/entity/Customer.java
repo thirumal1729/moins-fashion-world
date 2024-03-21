@@ -1,6 +1,13 @@
 package com.moins.fashion.world.entity;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.moins.fashion.world.util.Role;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,7 +21,7 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Customer {
+public class Customer implements UserDetails {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,4 +48,34 @@ public class Customer {
 
 	@OneToMany(mappedBy = "customer")
 	List<Rent> rents;
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return Collections.singletonList(() -> Role.CUSTOMER.toString());
+	}
+
+	@Override
+	public String getUsername() {
+		return this.email;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
 }

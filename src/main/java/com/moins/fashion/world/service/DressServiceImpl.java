@@ -73,16 +73,10 @@ public class DressServiceImpl implements DressService {
 		Dress dress = DressMapper.mapToDress(dressDto, filePath);
 		dress = this.dressDao.saveDress(dress);
 
-		Dress newDress = Dress.builder().type(dressDto.getType()).priceMRP(dressDto.getPriceMRP())
-				.rentPrice(dressDto.getRentPrice()).depositPrice(dressDto.getDepositPrice())
-				.brandName(dressDto.getBrandName()).dressImage(filePath).dressSize(dressDto.getDressSize()).build();
-
-		this.dressDao.saveDress(newDress);
-
 		ResponseStructure<Dress> responseStructure = new ResponseStructure<Dress>();
 		responseStructure.setStatusCode(HttpStatus.CREATED.value());
 		responseStructure.setMessage("Success");
-		responseStructure.setData(newDress);
+		responseStructure.setData(dress);
 
 		return new ResponseEntity<ResponseStructure<Dress>>(responseStructure, HttpStatus.CREATED);
 	}
