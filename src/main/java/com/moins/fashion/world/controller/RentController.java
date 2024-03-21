@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,9 +31,9 @@ public class RentController {
 	// Save Rent Details
 	@PostMapping("/{customerEmail}")
 	@PreAuthorize(value = "hasRole('CUSTOMER')")
-	public ResponseEntity<ResponseStructure<Rent>> saveRent(@Valid @RequestBody RentDto rentDto,
+	public ResponseEntity<ResponseStructure<Rent>> saveRent(@Valid @RequestBody RentDto rentDto, BindingResult result,
 			@PathVariable String customerEmail) {
-		return this.rentService.saveRent(rentDto, customerEmail);
+		return this.rentService.saveRent(rentDto, customerEmail, result);
 	}
 
 	// Fetch Rent Details by Customer
@@ -41,7 +42,6 @@ public class RentController {
 		return this.rentService.getRentById(customerId);
 	}
 
-	
 	// Fetch All Rent Details By Admin
 	@GetMapping("/{adminId}")
 	@PreAuthorize(value = "hasRole('ADMIN')")
@@ -49,7 +49,6 @@ public class RentController {
 		return this.rentService.getAllRentDetails(adminId);
 	}
 
-	
 	// Cancel Rent
 	@PutMapping("/{rentId}")
 	@PreAuthorize(value = "hasRole('ADMIN')")
