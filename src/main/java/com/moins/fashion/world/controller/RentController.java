@@ -26,26 +26,32 @@ public class RentController {
 	@Autowired
 	RentService rentService;
 
-	@PostMapping
-	public ResponseEntity<ResponseStructure<Rent>> saveRent(@Valid @RequestBody RentDto rentDto) {
-		return this.rentService.saveRent(rentDto);
+	// Save Rent Details
+	@PostMapping("/{customerEmail}")
+	public ResponseEntity<ResponseStructure<Rent>> saveRent(@Valid @RequestBody RentDto rentDto,
+			@PathVariable String customerEmail) {
+		return this.rentService.saveRent(rentDto, customerEmail);
 	}
 
-	@GetMapping("/{rentId}/{customerId}")
-	public ResponseEntity<ResponseStructure<Rent>> getRentById(@PathVariable int rentId, @PathVariable int customerId) {
-		return this.rentService.getRentById(rentId, customerId);
+	// Fetch Rent Details by Customer
+	@GetMapping("/{customerId}")
+	public ResponseEntity<ResponseStructure<List<Rent>>> getRentById(@PathVariable int customerId) {
+		return this.rentService.getRentById(customerId);
 	}
 
-	@GetMapping("/{adminId}")
+	// Fetch All Rent Details By Admin
+	@GetMapping("/all/{adminId}")
 	public ResponseEntity<ResponseStructure<List<Rent>>> getAllRentDetails(@PathVariable int adminId) {
 		return this.rentService.getAllRentDetails(adminId);
 	}
 
+	// Cancel Rent
 	@PutMapping("/{rentId}")
 	public ResponseEntity<ResponseStructure<String>> cancelRent(@PathVariable int rentId) {
 		return this.rentService.cancelRent(rentId);
 	}
 
+	// Confirm Rent By Admin
 	@PutMapping("/confirm/{rentId}")
 	public ResponseEntity<ResponseStructure<String>> confirmRent(@PathVariable int rentId) {
 		return this.rentService.confirmRent(rentId);

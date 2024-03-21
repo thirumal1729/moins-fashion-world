@@ -12,9 +12,9 @@ import com.moins.fashion.world.payload.RentDto;
 @Service
 public interface RentService {
 
-	ResponseEntity<ResponseStructure<Rent>> saveRent(RentDto rentDto);
+	ResponseEntity<ResponseStructure<Rent>> saveRent(RentDto rentDto, String customerEmail);
 
-	ResponseEntity<ResponseStructure<Rent>> getRentById(int rentId, int customerId);
+	ResponseEntity<ResponseStructure<List<Rent>>> getRentById(int rentId);
 
 	ResponseEntity<ResponseStructure<List<Rent>>> getAllRentDetails(int adminId);
 
