@@ -61,7 +61,6 @@ public class DressController {
 	}
 
 	@GetMapping("/allDresses")
-	@PreAuthorize(value = "hasRole('ADMIN')")
 	public ResponseEntity<ResponseStructure<List<Dress>>> findAllDresses() {
 		return dressService.findAllDresses();
 	}

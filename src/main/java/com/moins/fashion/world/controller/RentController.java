@@ -41,7 +41,6 @@ public class RentController {
 		return this.rentService.getRentById(customerId);
 	}
 
-	
 	// Fetch All Rent Details By Admin
 	@GetMapping("/{adminId}")
 	@PreAuthorize(value = "hasRole('ADMIN')")
@@ -49,7 +48,6 @@ public class RentController {
 		return this.rentService.getAllRentDetails(adminId);
 	}
 
-	
 	// Cancel Rent
 	@PutMapping("/{rentId}")
 	@PreAuthorize(value = "hasRole('ADMIN')")
