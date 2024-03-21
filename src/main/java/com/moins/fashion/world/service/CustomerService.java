@@ -17,6 +17,6 @@ public interface CustomerService {
 	ResponseEntity<ResponseStructure<Customer>> changePassword(int id, String new_password);
 
 	ResponseEntity<ResponseStructure<Customer>> findById(int id);
-	
+
 	ResponseEntity<ResponseStructure<JwtResponse>> customerLogin(JwtRequest request);
 }
