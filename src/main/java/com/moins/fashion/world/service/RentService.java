@@ -4,15 +4,19 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 
 import com.moins.fashion.world.dto.ResponseStructure;
 import com.moins.fashion.world.entity.Rent;
 import com.moins.fashion.world.payload.RentDto;
 
+import jakarta.validation.Valid;
+
 @Service
 public interface RentService {
 
-	ResponseEntity<ResponseStructure<Rent>> saveRent(RentDto rentDto, String customerEmail);
+	ResponseEntity<ResponseStructure<Rent>> saveRent(RentDto rentDto, String customerEmail,
+			@Valid BindingResult result);
 
 	ResponseEntity<ResponseStructure<List<Rent>>> getRentById(int rentId);
 

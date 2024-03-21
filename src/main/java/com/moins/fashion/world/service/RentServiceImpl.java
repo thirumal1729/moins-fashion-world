@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 
 import com.moins.fashion.world.dao.CustomerDao;
 import com.moins.fashion.world.dao.DressDao;
@@ -15,6 +17,7 @@ import com.moins.fashion.world.entity.Customer;
 import com.moins.fashion.world.entity.Dress;
 import com.moins.fashion.world.entity.Rent;
 import com.moins.fashion.world.exception.RentDetailsNotFoundException;
+import com.moins.fashion.world.exception.ValidationException;
 import com.moins.fashion.world.payload.RentDto;
 import com.moins.fashion.world.requsetmapper.RentMapper;
 import com.moins.fashion.world.util.Status;
@@ -30,8 +33,15 @@ public class RentServiceImpl implements RentService {
 	DressDao dressDao;
 
 	@Override
-	public ResponseEntity<ResponseStructure<Rent>> saveRent(RentDto rentDto, String customerEmail) {
-
+	public ResponseEntity<ResponseStructure<Rent>> saveRent(RentDto rentDto, String customerEmail,
+			BindingResult result) {
+		if (result.hasErrors()) {
+			String message = "";
+			for (FieldError error : result.getFieldErrors()) {
+				message = message + error.getDefaultMessage() + "\n";
+			}
+			throw new ValidationException(message);
+		}
 		Rent rent = RentMapper.mapToRent(rentDto, dressDao);
 		Customer customer = customerDao.findbyEmail(customerEmail);
 		rent.setCustomer(customer);
