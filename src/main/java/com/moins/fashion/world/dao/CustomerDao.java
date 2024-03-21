@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.moins.fashion.world.entity.Customer;
+import com.moins.fashion.world.exception.RecordNotFoundException;
 import com.moins.fashion.world.repository.CustomerRepository;
 
 @Repository
@@ -21,7 +22,7 @@ public class CustomerDao {
 	}
 	
 	public Customer findbyEmail(String email) {
-		return customerRepository.findByEmail(email).orElseThrow(() -> new RuntimeException());
+		return customerRepository.findByEmail(email).orElseThrow(() -> new RecordNotFoundException());
 	}
 	
 	public Customer findByToken(String token) {
