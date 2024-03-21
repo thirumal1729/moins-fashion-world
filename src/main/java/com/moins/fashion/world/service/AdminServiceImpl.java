@@ -28,7 +28,7 @@ public class AdminServiceImpl implements AdminService {
 		if (result.hasErrors()) {
 			String message = "";
 			for (FieldError error : result.getFieldErrors()) {
-				message = message + error.getDefaultMessage() + "\n";
+				message = message + error.getDefaultMessage()+",";
 			}
 			throw new ValidationException(message);
 		}

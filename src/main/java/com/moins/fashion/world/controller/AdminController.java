@@ -17,7 +17,7 @@ import com.moins.fashion.world.service.AdminServiceImpl;
 import jakarta.validation.Valid;
 
 @Controller
-@RequestMapping("admin")
+@RequestMapping("/admin")
 public class AdminController {
 	@Autowired
 	private AdminServiceImpl adminService;
