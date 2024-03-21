@@ -12,10 +12,10 @@ public interface CustomerService {
 
 	ResponseEntity<ResponseStructure<Customer>> createCustomer(@Valid CustomerDto customerDto);
 
-	ResponseEntity<ResponseStructure<Customer>> updateCustomer(@Valid String email, @Valid String password,
-			@Valid Customer customer);
+	ResponseEntity<ResponseStructure<Customer>> updateCustomer(int id,
+			@Valid CustomerDto customerdto);
 
-	ResponseEntity<ResponseStructure<Customer>> changePassword(@Valid String email, @Valid String old_password,
+	ResponseEntity<ResponseStructure<Customer>> changePassword(int id,
 			@Valid String new_password);
 
 }

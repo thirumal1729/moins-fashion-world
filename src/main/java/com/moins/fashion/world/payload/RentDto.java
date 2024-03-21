@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import io.micrometer.common.lang.NonNull;
 import jakarta.validation.constraints.Future;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,8 +17,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class RentDto {
 
-	@Future(message = "Date must be in the future")
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@NonNull
 	private String rentDate;
 	private List<Integer> dressesId;
 }

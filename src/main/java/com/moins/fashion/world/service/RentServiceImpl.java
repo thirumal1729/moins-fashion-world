@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import com.moins.fashion.world.dao.CustomerDao;
 import com.moins.fashion.world.dao.RentDao;
@@ -14,6 +15,7 @@ import com.moins.fashion.world.payload.RentDto;
 import com.moins.fashion.world.requsetmapper.RentMapper;
 import com.moins.fashion.world.util.Status;
 
+@Service
 public class RentServiceImpl implements RentService {
 
 	@Autowired

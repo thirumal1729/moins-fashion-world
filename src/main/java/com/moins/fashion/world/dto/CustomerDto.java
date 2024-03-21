@@ -17,10 +17,10 @@ public class CustomerDto {
 	@Column(unique = true)
 	private String email;
 
-	@NotNull
+	
 	private long phone; 
 
-	@NotNull
+	
 	private String password;
 
 	private String address;
