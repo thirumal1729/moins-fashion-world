@@ -58,20 +58,18 @@ public class RentServiceImpl implements RentService {
 
 	// Validation to be provided by the customer
 	@Override
-	public ResponseEntity<ResponseStructure<List<Rent>>> getRentById(int customerId){
+	public ResponseEntity<ResponseStructure<List<Rent>>> getRentById(int customerId) {
 
 		Customer customer = customerDao.findCustomerById(customerId);
 		List<Rent> rentList = customer.getRents();
-		if(rentList!=null)
-		{
-		ResponseStructure<List<Rent>> responseStructure = new ResponseStructure<List<Rent>>();
-		responseStructure.setStatusCode(HttpStatus.OK.value());
-		responseStructure.setMessage("Success");
-		responseStructure.setData(rentList);
+		if (rentList != null) {
+			ResponseStructure<List<Rent>> responseStructure = new ResponseStructure<List<Rent>>();
+			responseStructure.setStatusCode(HttpStatus.OK.value());
+			responseStructure.setMessage("Success");
+			responseStructure.setData(rentList);
 
-		return new ResponseEntity<ResponseStructure<List<Rent>>>(responseStructure, HttpStatus.OK);
-		}
-		else {
+			return new ResponseEntity<ResponseStructure<List<Rent>>>(responseStructure, HttpStatus.OK);
+		} else {
 			throw new RentDetailsNotFoundException();
 		}
 

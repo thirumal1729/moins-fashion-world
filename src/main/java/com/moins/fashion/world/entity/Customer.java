@@ -12,10 +12,16 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@Builder // if I use @Builder then by difault all constructord are private , so we have to write both annotations to activate it
+@NoArgsConstructor
+@AllArgsConstructor
 public class Customer {
 
 	@Id
@@ -28,10 +34,9 @@ public class Customer {
 	@Column(unique = true)
 	private String email;
 
-	@NotNull
+	
 	private long phone;
 
-	@NotNull
 	private String password;
 
 	private String address;

@@ -50,6 +50,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 	// RentDetailNotAvailableException
 	@ExceptionHandler(RentDetailsNotFoundException.class)
+
 	public ResponseEntity<ResponseStructure<String>> catchRentDetailsNotAvailableException(
 			RentDetailsNotFoundException exception) {
 		ResponseStructure<String> responseStructure = new ResponseStructure<String>();
@@ -72,5 +73,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		responseStructure.setData("Data might be duplicated!!");
 
 		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(MailFailedToSendException.class)
+	public ResponseEntity<ResponseStructure<String>> catchMailFailedException(MailFailedToSendException exception) {
+		ResponseStructure<String> structure = new ResponseStructure<String>();
+		structure.setStatusCode(HttpStatus.BAD_REQUEST.value());
+		structure.setMessage("BAD REQUEST");
+		structure.setData(exception.getMessage());
+
+		return new ResponseEntity<ResponseStructure<String>>(structure, HttpStatus.BAD_REQUEST);
 	}
 }

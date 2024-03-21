@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
-public class RentDetailsNotFoundException extends Exception {
+public class RentDetailsNotFoundException extends RuntimeException {
 
 	String message = "Rent details Not found";
 	
