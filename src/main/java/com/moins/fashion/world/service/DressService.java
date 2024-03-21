@@ -26,4 +26,6 @@ public interface DressService {
 	ResponseEntity<ResponseStructure<Dress>> findById(int dressId);
 
 	ResponseEntity<ResponseStructure<List<Dress>>> findAllDresses();
+
+	ResponseEntity<ResponseStructure<String>> deleteDress(int dressId);
 }
