@@ -18,12 +18,14 @@ public interface DressService {
 	ResponseEntity<ResponseStructure<Dress>> saveDress(MultipartFile file, DressDto dressDto) throws IOException;
 
 	ResponseEntity<ResponseStructure<List<Dress>>> findByType(String type);
-	
+
 	ResponseEntity<ResponseStructure<List<Dress>>> findByBrandName(String brandName);
-	
+
 	ResponseEntity<ResponseStructure<List<Dress>>> findBySize(DressSize size);
-	
+
 	ResponseEntity<ResponseStructure<Dress>> findById(int dressId);
-	
+
 	ResponseEntity<ResponseStructure<List<Dress>>> findAllDresses();
+
+	ResponseEntity<ResponseStructure<String>> deleteDress(int dressId);
 }

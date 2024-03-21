@@ -10,6 +10,5 @@ public class DressMapper {
 		return 	Dress.builder().type(dressDto.getType()).priceMRP(dressDto.getPriceMRP()).rentPrice(dressDto.getRentPrice())
 				.depositPrice(dressDto.getDepositPrice()).brandName(dressDto.getBrandName()).dressImage(filePath)
 				.dressSize(dressDto.getDressSize()).build();
-
 	}
 }

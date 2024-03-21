@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.moins.fashion.world.dto.CustomerDto;
 import com.moins.fashion.world.dto.ResponseStructure;
 import com.moins.fashion.world.entity.Customer;
 import com.moins.fashion.world.payload.JwtRequest;
@@ -23,8 +24,8 @@ public class CustomerManageController {
 	private CustomerService customerService;
 	
 	@PostMapping
-	ResponseEntity<ResponseStructure<Customer>> createCustomer(@Valid @RequestBody Customer customer) {
-		return customerService.createCustomer(customer);
+	ResponseEntity<ResponseStructure<Customer>> createCustomer(@Valid @RequestBody CustomerDto customerDto) {
+		return customerService.createCustomer(customerDto);
 	}
 
 	@PostMapping("/login")

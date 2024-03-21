@@ -27,30 +27,38 @@ public class RentController {
 	@Autowired
 	RentService rentService;
 
-	@PostMapping
+	// Save Rent Details
+	@PostMapping("/{customerEmail}")
 	@PreAuthorize(value = "hasRole('CUSTOMER')")
-	public ResponseEntity<ResponseStructure<Rent>> saveRent(@Valid @RequestBody RentDto rentDto) {
-		return this.rentService.saveRent(rentDto);
+	public ResponseEntity<ResponseStructure<Rent>> saveRent(@Valid @RequestBody RentDto rentDto,
+			@PathVariable String customerEmail) {
+		return this.rentService.saveRent(rentDto, customerEmail);
 	}
 
-	@GetMapping("/{rentId}/{customerId}")
-	public ResponseEntity<ResponseStructure<Rent>> getRentById(@PathVariable int rentId, @PathVariable int customerId) {
-		return this.rentService.getRentById(rentId, customerId);
+	// Fetch Rent Details by Customer
+	@GetMapping("/{customerId}")
+	public ResponseEntity<ResponseStructure<List<Rent>>> getRentById(@PathVariable int customerId) {
+		return this.rentService.getRentById(customerId);
 	}
 
+	
+	// Fetch All Rent Details By Admin
 	@GetMapping("/{adminId}")
 	@PreAuthorize(value = "hasRole('ADMIN')")
 	public ResponseEntity<ResponseStructure<List<Rent>>> getAllRentDetails(@PathVariable int adminId) {
 		return this.rentService.getAllRentDetails(adminId);
 	}
 
-	@PutMapping("/cancel/{rentId}")
+	
+	// Cancel Rent
+	@PutMapping("/{rentId}")
+	@PreAuthorize(value = "hasRole('ADMIN')")
 	public ResponseEntity<ResponseStructure<String>> cancelRent(@PathVariable int rentId) {
 		return this.rentService.cancelRent(rentId);
 	}
-	
-	@PutMapping("/{rentId}")
-	@PreAuthorize(value = "hasRole('ADMIN')")
+
+	// Confirm Rent By Admin
+	@PutMapping("/confirm/{rentId}")
 	public ResponseEntity<ResponseStructure<String>> confirmRent(@PathVariable int rentId) {
 		return this.rentService.confirmRent(rentId);
 	}

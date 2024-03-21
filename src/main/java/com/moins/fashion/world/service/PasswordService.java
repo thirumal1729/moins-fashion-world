@@ -10,6 +10,7 @@ import com.moins.fashion.world.dto.ResponseStructure;
 import com.moins.fashion.world.entity.Customer;
 import com.moins.fashion.world.exception.MailFailedToSendException;
 
+
 @Service
 public class PasswordService {
 
@@ -22,7 +23,7 @@ public class PasswordService {
 	@Autowired
 	private SendMailService sendMailService;
 	
-	public ResponseEntity<ResponseStructure<String>> forgotPassword(String email) throws MailFailedToSendException{
+	public ResponseEntity<ResponseStructure<String>> forgotPassword(String email) {
 	
 		Customer receivedCustomer = customerDao.findbyEmail(email);
 		
@@ -43,12 +44,11 @@ public class PasswordService {
 			return new ResponseEntity<ResponseStructure<String>>(rs, HttpStatus.OK);
 
 		} else {
-
 			throw new MailFailedToSendException("User not found");
 		}
 		
 	}
-	public ResponseEntity<ResponseStructure<String>>verify(String token, String answer) throws MailFailedToSendException{
+	public ResponseEntity<ResponseStructure<String>>verify(String token, String answer){
 		
 		Customer receivedCustomer = customerDao.findByToken(token);
 		if (receivedCustomer != null && receivedCustomer.getAnswer().equalsIgnoreCase(answer)) {
@@ -67,7 +67,7 @@ public class PasswordService {
 		}
 	}
 	
-	public ResponseEntity<ResponseStructure<String>>setNewPassword(String token, String new_password) throws MailFailedToSendException{
+	public ResponseEntity<ResponseStructure<String>>setNewPassword(String token, String new_password){
 		
 		
 		Customer receivedCustomer = customerDao.findByToken(token);

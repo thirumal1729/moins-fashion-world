@@ -56,7 +56,7 @@ public class SecurityConfig {
 
 		http.csrf(csrf -> csrf.disable()).cors(cors -> cors.disable())
 				.authorizeHttpRequests(auth -> auth.requestMatchers(AUTH_WHITELIST).permitAll()
-						.requestMatchers("/fashion/**", "/customerManager/**").permitAll()
+						.requestMatchers("/admin/**", "/customerManager/**").permitAll()
 						.requestMatchers("/dresses/**", "/customer/**", "/rent/**").authenticated().anyRequest()
 						.authenticated())
 				.exceptionHandling(ex -> ex.authenticationEntryPoint(point))

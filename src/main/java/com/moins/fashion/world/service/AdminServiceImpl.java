@@ -21,6 +21,7 @@ import com.moins.fashion.world.exception.ValidationException;
 import com.moins.fashion.world.payload.AdminDto;
 import com.moins.fashion.world.payload.JwtRequest;
 import com.moins.fashion.world.payload.JwtResponse;
+import com.moins.fashion.world.requsetmapper.AdminMapper;
 import com.moins.fashion.world.util.JwtHelper;
 
 @Service
@@ -52,8 +53,7 @@ public class AdminServiceImpl implements AdminService {
 			}
 			throw new ValidationException(message);
 		}
-		Admin adminObject = Admin.builder().adminName(adminDto.getAdminName()).email(adminDto.getEmail())
-				.password(passwordEncoder.encode(adminDto.getPassword())).phone(adminDto.getPhone()).build();
+		Admin adminObject = AdminMapper.mapToDress(adminDto);
 
 		adminObject = adminDao.saveAdmin(adminObject);
 
