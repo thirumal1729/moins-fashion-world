@@ -46,6 +46,7 @@ public class DressServiceImpl implements DressService {
 
 		// Fullpath
 		String filePath = path + File.separator + fileName1;
+		System.out.println(path+" and "+fileName1);
 
 		// create folder if not created
 		File f = new File(path);
@@ -147,6 +148,21 @@ public class DressServiceImpl implements DressService {
 			responseStructure.setData(dresses);
 
 			return new ResponseEntity<ResponseStructure<List<Dress>>>(responseStructure, HttpStatus.OK);
+		} else {
+			throw new DressesNotAvailableException();
+		}
+	}
+
+	@Override
+	public ResponseEntity<ResponseStructure<String>> deleteDress(int dressId) {
+		Boolean value = this.dressDao.deleteDress(dressId);
+		if (value == true) {
+			ResponseStructure<String> responseStructure = new ResponseStructure<String>();
+			responseStructure.setStatusCode(HttpStatus.OK.value());
+			responseStructure.setMessage("Success");
+			responseStructure.setData("Record Deleted");
+
+			return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.OK);
 		} else {
 			throw new DressesNotAvailableException();
 		}
