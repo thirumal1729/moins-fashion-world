@@ -45,7 +45,7 @@ public class CustomerServiceImpl implements CustomerService {
 	public ResponseEntity<ResponseStructure<Customer>> createCustomer(CustomerDto customerDto) {
 
 		Customer receivedCustomer = CustomerMapper.mapToCustomer(customerDto,passwordEncoder);
-		 receivedCustomer = customerDao.createCustomer(receivedCustomer);
+		receivedCustomer = customerDao.createCustomer(receivedCustomer);
 
 		ResponseStructure<Customer> rs = new ResponseStructure<Customer>();
 		rs.setData(receivedCustomer);
