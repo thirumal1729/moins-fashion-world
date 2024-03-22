@@ -19,10 +19,12 @@ import com.moins.fashion.world.entity.Rent;
 import com.moins.fashion.world.payload.RentDto;
 import com.moins.fashion.world.service.RentService;
 
+import io.swagger.annotations.Api;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/rent")
+@Api(tags = "Rent Management")
 public class RentController {
 
 	@Autowired
