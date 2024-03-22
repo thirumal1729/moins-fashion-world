@@ -20,7 +20,7 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
-	
+
 	@Autowired
 	private AdminService adminService;
 
@@ -33,7 +33,7 @@ public class AdminController {
 
 	// Admin Login
 	@PostMapping("/login")
-	public ResponseEntity<ResponseStructure<JwtResponse>> login(@RequestBody JwtRequest request){
+	public ResponseEntity<ResponseStructure<JwtResponse>> login(@RequestBody JwtRequest request) {
 		return this.adminService.login(request);
 	}
 }

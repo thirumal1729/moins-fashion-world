@@ -44,8 +44,8 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public ResponseEntity<ResponseStructure<Customer>> createCustomer(CustomerDto customerDto) {
 
-		Customer receivedCustomer = CustomerMapper.mapToCustomer(customerDto);
-		 receivedCustomer = customerDao.createCustomer(receivedCustomer);
+		Customer receivedCustomer = CustomerMapper.mapToCustomer(customerDto,passwordEncoder);
+		receivedCustomer = customerDao.createCustomer(receivedCustomer);
 
 		ResponseStructure<Customer> rs = new ResponseStructure<Customer>();
 		rs.setData(receivedCustomer);
@@ -59,7 +59,7 @@ public class CustomerServiceImpl implements CustomerService {
 	public ResponseEntity<ResponseStructure<Customer>> updateCustomer(int id, CustomerDto customerDto) {
 
 		Customer receivedCustomer =customerDao.findCustomerById(id); 
-		 Customer receivedCustomer2=CustomerMapper.mapToCustomer(customerDto);
+		 Customer receivedCustomer2=CustomerMapper.mapToCustomer(customerDto,passwordEncoder);
 		
 		
 		 if(customerDto.getName()!=null)

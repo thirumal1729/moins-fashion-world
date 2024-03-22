@@ -33,7 +33,7 @@ public class RentController {
 	// Save Rent Details
 	@PostMapping("/{customerEmail}")
 	@PreAuthorize(value = "hasRole('CUSTOMER')")
-	public ResponseEntity<ResponseStructure<Rent>> saveRent(@Valid BindingResult result, @RequestBody RentDto rentDto,
+	public ResponseEntity<ResponseStructure<Rent>> saveRent(@Valid @RequestBody RentDto rentDto, BindingResult result,
 			@PathVariable String customerEmail) {
 		return this.rentService.saveRent(rentDto, customerEmail, result);
 	}
@@ -54,13 +54,13 @@ public class RentController {
 
 	// Cancel Rent
 	@PutMapping("/{rentId}")
+	@PreAuthorize(value = "hasRole('ADMIN')")
 	public ResponseEntity<ResponseStructure<String>> cancelRent(@PathVariable int rentId) {
 		return this.rentService.cancelRent(rentId);
 	}
 
 	// Confirm Rent By Admin
 	@PutMapping("/confirm/{rentId}")
-	@PreAuthorize(value = "hasRole('ADMIN')")
 	public ResponseEntity<ResponseStructure<String>> confirmRent(@PathVariable int rentId) {
 		return this.rentService.confirmRent(rentId);
 	}
