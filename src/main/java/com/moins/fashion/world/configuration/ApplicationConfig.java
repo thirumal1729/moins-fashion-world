@@ -2,36 +2,48 @@ package com.moins.fashion.world.configuration;
 
 import java.util.List;
 
-import org.apache.catalina.Server;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import io.swagger.models.Contact;
-import io.swagger.models.Info;
-import io.swagger.models.License;
 import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Contact;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.info.License;
+import io.swagger.v3.oas.models.servers.Server;
 
 @Configuration
 public class ApplicationConfig {
+
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
 	@Bean
 	public OpenAPI usersMicroserviceOpenAPI() {
 
-		Server localhost = new Server();
-		localhost.setUrl("http://hostname:8080");
-		localhost.setDescription("Development environment");
+		Server devServer = new Server();
+		devServer.setUrl("http://localhost:8080");
+		devServer.setDescription("Server URL in Development Environment");
+
+		Server prodServer = new Server();
+		prodServer.setUrl("http://localhost:8080/swagger-ui/index.html");
+		prodServer.setDescription("Swagger Url");
 
 		Contact contact = new Contact();
-		contact.setEmail("email@domain.in");
-		contact.setName("Application Name");
-		contact.setUrl("https://domain name");
+		contact.setEmail("info@dress.com");
+		contact.setName("Dress Rental System Application");
+		contact.setUrl("https://www.dress.com");
 
 		License mitLicense = new License().name("MIT License").url("https://choosealicense.com/licenses/mit/");
 
-		Info info = new Info().title("ApplicationName RESTful Web Service documentation").version("1.0").contact(contact)
-				.description("This API exposes endpoints to manage Application.")
-				.termsOfService("https://domainname/terms").license(mitLicense);
+		Info info = new Info().title("Dress Rental System RESTful Web Service documentation").version("1.0")
+				.contact(contact).description("This API exposes endpoints to manage Application.")
+				.termsOfService("https://www.dress.com/terms").license(mitLicense);
 
-		return new OpenAPI().info(info).servers(List.of(localhost));
+		return new OpenAPI().info(info).servers(List.of(devServer, prodServer));
 	}
 
 }
