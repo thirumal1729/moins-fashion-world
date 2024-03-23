@@ -15,25 +15,37 @@ import com.moins.fashion.world.dto.ResponseStructure;
 import com.moins.fashion.world.entity.Customer;
 import com.moins.fashion.world.service.CustomerService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/customer")
+@RequestMapping("/dressrentalsystem/customer")
 public class CustomerController {
 
 	@Autowired
 	private CustomerService customerService;
 
-	@PutMapping("/customer/{id}")
+	@Operation(description = "To update Customer info", summary = "Customer will be updated in the database")
+	@ApiResponses(value = { @ApiResponse(description = "Customer Update", responseCode = "200"),
+			@ApiResponse(content = @Content(), responseCode = "400") })
+	@PutMapping("/{id}")
 	@PreAuthorize(value = "hasRole('CUSTOMER')")
-	ResponseEntity<ResponseStructure<Customer>> updateCustomer(@PathVariable int id, @Valid @RequestBody CustomerDto customer) {
+	ResponseEntity<ResponseStructure<Customer>> updateCustomer(@PathVariable int id,
+			@Valid @RequestBody CustomerDto customer) {
 		return customerService.updateCustomer(id, customer);
 	}
 
-	@PutMapping("/customer/changepassword/{id}")
+	@Operation(description = "To update Customer password", summary = "Customer password is updated")
+	@ApiResponses(value = { @ApiResponse(description = "Customer password updated", responseCode = "200"),
+			@ApiResponse(content = @Content(), responseCode = "400") })
+	@PutMapping("/changepassword/{id}")
 	@PreAuthorize(value = "hasRole('CUSTOMER')")
-	ResponseEntity<ResponseStructure<Customer>> changePassword(@PathVariable int id , @Valid @RequestParam String new_password) {
-		return customerService.changePassword( id, new_password);
+	ResponseEntity<ResponseStructure<Customer>> changePassword(@PathVariable int id,
+			@Valid @RequestParam String new_password) {
+		return customerService.changePassword(id, new_password);
 	}
- 
+
 }

@@ -22,13 +22,21 @@ import com.moins.fashion.world.payload.DressDto;
 import com.moins.fashion.world.service.DressService;
 import com.moins.fashion.world.util.DressSize;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 @RestController
-@RequestMapping("/dresses")
+@RequestMapping("/dressrentalsystem/dresses")
 public class DressController {
 
 	@Autowired
 	private DressService dressService;
 
+	@Operation(description = "To Create Dress info", summary = "Dress will be saved in the database")
+	@ApiResponses(value = { @ApiResponse(description = "Dress Created", responseCode = "201"),
+			@ApiResponse(content = @Content(), responseCode = "400") })
 	@PostMapping
 	@PreAuthorize(value = "hasRole('ADMIN')")
 	public ResponseEntity<ResponseStructure<Dress>> saveDress(@RequestParam("image") MultipartFile file,
@@ -36,35 +44,53 @@ public class DressController {
 		return this.dressService.saveDress(file, dressDto);
 	}
 
+	@Operation(description = "To fetch Dress info by type", summary = "Dress will be fetched from the database")
+	@ApiResponses(value = { @ApiResponse(description = "Dress fetched", responseCode = "200"),
+			@ApiResponse(content = @Content(), responseCode = "400") })
 	@GetMapping("/type/{type}")
 	@PreAuthorize(value = "hasRole('CUSTOMER')")
 	public ResponseEntity<ResponseStructure<List<Dress>>> findByType(@PathVariable String type) {
 		return dressService.findByType(type);
 	}
 
+	@Operation(description = "To fetch Dress info by brand", summary = "Dress will be fetched from the database")
+	@ApiResponses(value = { @ApiResponse(description = "Dress fetched", responseCode = "200"),
+			@ApiResponse(content = @Content(), responseCode = "400") })
 	@GetMapping("/brandName/{brandName}")
 	@PreAuthorize(value = "hasRole('CUSTOMER')")
 	public ResponseEntity<ResponseStructure<List<Dress>>> findByBrandName(@PathVariable String brandName) {
 		return dressService.findByBrandName(brandName);
 	}
 
+	@Operation(description = "To fetch Dress info by size", summary = "Dress will be fetched from the database")
+	@ApiResponses(value = { @ApiResponse(description = "Dress fetched", responseCode = "200"),
+			@ApiResponse(content = @Content(), responseCode = "400") })
 	@GetMapping("/size/{size}")
 	@PreAuthorize(value = "hasRole('CUSTOMER')")
 	public ResponseEntity<ResponseStructure<List<Dress>>> findBySize(@PathVariable DressSize size) {
 		return dressService.findBySize(size);
 	}
 
+	@Operation(description = "To fetch Dress info by ID", summary = "Dress will be fetched from the database")
+	@ApiResponses(value = { @ApiResponse(description = "Dress fetched", responseCode = "200"),
+			@ApiResponse(content = @Content(), responseCode = "400") })
 	@GetMapping("/dressId/{dressId}")
 	@PreAuthorize(value = "hasRole('CUSTOMER')")
 	public ResponseEntity<ResponseStructure<Dress>> findById(@PathVariable int dressId) {
 		return dressService.findById(dressId);
 	}
 
+	@Operation(description = "To fetch all Dresses info", summary = "Dresses will be fetched from the database")
+	@ApiResponses(value = { @ApiResponse(description = "Dress fetched", responseCode = "200"),
+			@ApiResponse(content = @Content(), responseCode = "400") })
 	@GetMapping("/allDresses")
 	public ResponseEntity<ResponseStructure<List<Dress>>> findAllDresses() {
 		return dressService.findAllDresses();
 	}
 
+	@Operation(description = "To remove Dress info by id", summary = "Dress will be removed from the database")
+	@ApiResponses(value = { @ApiResponse(description = "Dress removed", responseCode = "200"),
+			@ApiResponse(content = @Content(), responseCode = "400") })
 	@DeleteMapping("/{dressId}")
 	@PreAuthorize(value = "hasRole('ADMIN')")
 	public ResponseEntity<ResponseStructure<String>> deleteDress(@PathVariable int dressId) {

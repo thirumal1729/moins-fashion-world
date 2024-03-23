@@ -15,33 +15,33 @@ import io.swagger.v3.oas.models.servers.Server;
 
 @Configuration
 public class ApplicationConfig {
-	
+
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
+
 	@Bean
 	public OpenAPI usersMicroserviceOpenAPI() {
 
 		Server devServer = new Server();
 		devServer.setUrl("http://localhost:8080");
-		devServer.setDescription("Server URL in Development environment");
+		devServer.setDescription("Server URL in Development Environment");
 
 		Server prodServer = new Server();
 		prodServer.setUrl("http://localhost:8080/swagger-ui/index.html");
 		prodServer.setDescription("Swagger Url");
 
 		Contact contact = new Contact();
-		contact.setEmail("essportal.in");
+		contact.setEmail("info@dress.com");
 		contact.setName("Dress Rental System Application");
-		contact.setUrl("https://www.essportal.com");
+		contact.setUrl("https://www.dress.com");
 
 		License mitLicense = new License().name("MIT License").url("https://choosealicense.com/licenses/mit/");
 
 		Info info = new Info().title("Dress Rental System RESTful Web Service documentation").version("1.0")
-				.contact(contact).description("This API exposes endpoints to manage ESS.")
-				.termsOfService("https://www.essportal.com/terms").license(mitLicense);
+				.contact(contact).description("This API exposes endpoints to manage Application.")
+				.termsOfService("https://www.dress.com/terms").license(mitLicense);
 
 		return new OpenAPI().info(info).servers(List.of(devServer, prodServer));
 	}
